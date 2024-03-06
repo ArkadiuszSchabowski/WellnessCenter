@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WellnessCenterBackend.Database;
 
@@ -10,9 +11,11 @@ using WellnessCenterBackend.Database;
 namespace WellnessCenterBackend.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240305235909_EntityBookingPropertyIsPaid_False")]
+    partial class EntityBookingPropertyIsPaid_False
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,16 +41,15 @@ namespace WellnessCenterBackend.Migrations
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MassageNameId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Price")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("MassageNameId");
+                    b.HasKey("Id");
 
                     b.ToTable("Bookings");
                 });
@@ -218,17 +220,6 @@ namespace WellnessCenterBackend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WellnessCenterBackend.Entities.Booking", b =>
-                {
-                    b.HasOne("WellnessCenterBackend.Entities.MassageName", "MassageName")
-                        .WithMany("MassageBookings")
-                        .HasForeignKey("MassageNameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MassageName");
-                });
-
             modelBuilder.Entity("WellnessCenterBackend.Entities.User", b =>
                 {
                     b.HasOne("WellnessCenterBackend.Entities.Role", "Role")
@@ -238,11 +229,6 @@ namespace WellnessCenterBackend.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("WellnessCenterBackend.Entities.MassageName", b =>
-                {
-                    b.Navigation("MassageBookings");
                 });
 
             modelBuilder.Entity("WellnessCenterBackend.Entities.Role", b =>

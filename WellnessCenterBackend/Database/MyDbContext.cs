@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Data;
 using WellnessCenterBackend.Entities;
 
 namespace WellnessCenterBackend.Database
@@ -61,6 +62,44 @@ namespace WellnessCenterBackend.Database
                 .HasMany(r => r.Users)
                 .WithOne(u => u.Role)
                 .HasForeignKey(u => u.RoleId);
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = 1,
+                Login = "Dominika123",
+                HashPassword = "12345",
+                Phone = "500-600-700",
+                FirstName = "Dominika",
+                LastName = "Zając",
+                Email = "zajączek@o2.pl",
+                RoleId = 1
+            },
+            new User
+            {
+                Id = 2,
+                Login = "Paulina123",
+                HashPassword = "23456",
+                Phone = "501-601-701",
+                FirstName = "Paulina",
+                LastName = "Młyniok",
+                Email = "młyniok@o2.pl",
+                RoleId = 2
+            },
+            new User
+            {
+                Id = 3,
+                Login = "Renata123",
+                HashPassword = "34567",
+                Phone = "502-602-702",
+                FirstName = "Renata",
+                LastName = "Szum",
+                Email = "szum@o2.pl",
+                RoleId = 3,
+            });
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.MassageName)
+                .WithMany(m => m.MassageBookings)
+                .HasForeignKey(b => b.MassageNameId);
         }
     }
 }

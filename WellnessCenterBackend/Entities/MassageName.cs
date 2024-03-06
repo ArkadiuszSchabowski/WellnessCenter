@@ -10,5 +10,6 @@ namespace WellnessCenterBackend.Entities
         public int Price { get; set; }
         public PerformerType Performer { get; set; } = PerformerType.Anyone;
         public string? Description { get; set; }
+        public List<Booking> MassageBookings { get; set; }
     }
 }
