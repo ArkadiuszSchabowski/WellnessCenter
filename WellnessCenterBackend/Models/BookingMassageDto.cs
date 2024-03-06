@@ -2,8 +2,8 @@
 {
     public class BookingMassageDto
     {
-        public string ServiceName { get; set; }
         public int BookingDay { get; set; }
         public int BookingHour { get; set; }
+        public int MassageNameId { get; set; }
     }
 }

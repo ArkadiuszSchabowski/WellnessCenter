@@ -6,7 +6,6 @@ namespace WellnessCenterBackend.Entities
     public class Booking
     {
         public int Id { get; set; }
-        public string Name { get; set; }
         public int BookingDay { get; set; }
         public int BookingHour { get; set; }
         public int MassageNameId { get; set; }

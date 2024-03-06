@@ -3,12 +3,14 @@ using WellnessCenterBackend.Database;
 using WellnessCenterBackend.Entities;
 using WellnessCenterBackend.Exceptions;
 using WellnessCenterBackend.Models;
+using WellnessCenterBackend.Validators;
 
 namespace WellnessCenterBackend.Services
 {
     public interface IBookingService
     {
         int CreateBooking(BookingMassageDto dto);
+        object GetAll();
         Booking GetBooking(int id);
         void RemoveBooking(int id);
     }
@@ -24,15 +26,7 @@ namespace WellnessCenterBackend.Services
         }
         public int CreateBooking(BookingMassageDto dto)
         {
-
-            if (dto == null)
-            {
-                throw new BadRequestException("Wprowadzono nieprawidłowe dane");
-            }
-
-            dto.ServiceName = CheckNameBooking(dto.ServiceName);
-            dto.BookingDay = CheckDayBooking(dto.BookingDay);
-            dto.BookingHour = CheckHourBooking(dto.BookingHour);
+            dto = BookingValidator.ValidatorDto(dto);
 
             var booking = _mapper.Map<Booking>(dto);
 
@@ -41,33 +35,10 @@ namespace WellnessCenterBackend.Services
             return booking.Id;
         }
 
-        private string CheckNameBooking(string serviceName)
+        public object GetAll()
         {
-            if (serviceName != "Chocolate Massage" && serviceName != "Honey Massage" && serviceName != "Classic Massage")
-            {
-                throw new BadRequestException("Nie ma takiej usługi");
-            }
-            return serviceName;
+            return _context.Bookings.ToList();
         }
-
-        private int CheckDayBooking(int bookingDay)
-        {
-            if (bookingDay < 1 || bookingDay > 31)
-            {
-                throw new BadRequestException("Podano nieprawidłowy dzień");
-            }
-            return bookingDay;
-        }
-
-        private int CheckHourBooking(int bookingHour)
-        {
-            if(bookingHour < 1 || bookingHour > 24)
-            {
-                throw new BadRequestException("Podano nieprawidłową godzinę");
-            }
-            return bookingHour;
-        }
-
         public Booking GetBooking(int id)
         {
             var booking = GetBookingById(id);

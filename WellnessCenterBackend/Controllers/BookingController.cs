@@ -21,6 +21,12 @@ namespace WellnessCenterBackend.Controllers
             int id = _service.CreateBooking(dto);
             return Created("/api/booking/id", null);
         }
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            var bookings = _service.GetAll();
+            return Ok(bookings);
+        }
 
         [Authorize(Roles = "Manager, Admin")]
         [HttpGet("{id}")]
