@@ -1,0 +1,20 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 400px;
+  margin: 10px;
+  border: 1px solid #555;
+}
+
+.drawer-menu {
+  width: 200px;
+  text-align: center;
+  padding: 10px;
+}
+
+.mat-drawer button {
+  width: 80%;
+  margin-top: 20px;
+  margin-left: 10px;
+}
