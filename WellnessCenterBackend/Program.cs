@@ -63,7 +63,7 @@ namespace SpaSalon
             var app = builder.Build();
 
             app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:5173")
+                builder.WithOrigins("http://localhost:4200")
                        .AllowAnyHeader()
                        .AllowAnyMethod()
             );
