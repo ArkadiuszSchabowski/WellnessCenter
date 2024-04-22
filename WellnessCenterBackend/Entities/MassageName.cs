@@ -1,6 +1,4 @@
-﻿using WellnessCenterBackend.Enums;
-
-namespace WellnessCenterBackend.Entities
+﻿namespace WellnessCenterBackend.Entities
 {
     public class MassageName
     {
@@ -8,7 +6,6 @@ namespace WellnessCenterBackend.Entities
         public string ServiceName { get; set; }
         public int ServiceTime { get; set; }
         public int Price { get; set; }
-        public PerformerType Performer { get; set; } = PerformerType.Anyone;
         public string? Description { get; set; }
         public List<Booking> MassageBookings { get; set; }
     }

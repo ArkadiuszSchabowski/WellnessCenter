@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Data;
 using WellnessCenterBackend.Entities;
 
 namespace WellnessCenterBackend.Database
@@ -23,7 +22,6 @@ namespace WellnessCenterBackend.Database
                 ServiceTime = 60,
                 Description = "Chocolate Massage - Description",
                 Price = 199,
-                Performer = Enums.PerformerType.Women,
             },
             new MassageName
             {
@@ -40,7 +38,6 @@ namespace WellnessCenterBackend.Database
                 ServiceTime = 60,
                 Description = "Clasic Massage Description",
                 Price = 99,
-                Performer = Enums.PerformerType.Man,
             });
             modelBuilder.Entity<Role>().HasData(new Role
             {
