@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using WellnessCenterBackend.Models;
 using WellnessCenterBackend.Seeders;
 using WellnessCenterBackend.Services;
@@ -21,7 +22,8 @@ namespace WellnessCenterBackend.Controllers
         public ActionResult Login([FromBody] LoginDto dto)
         {
             string token = _service.GenerateJWT(dto);
-            return Ok(token);
+            var jsonToken = JsonSerializer.Serialize(token);
+            return Ok(jsonToken);
         }
         [HttpPost("register")]
         public ActionResult Registration([FromBody] RegisterUserDto dto)
