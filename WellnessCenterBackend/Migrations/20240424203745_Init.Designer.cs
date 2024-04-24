@@ -11,8 +11,8 @@ using WellnessCenterBackend.Database;
 namespace WellnessCenterBackend.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240306002206_ModifyEntityBooking")]
-    partial class ModifyEntityBooking
+    [Migration("20240424203745_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,10 +44,6 @@ namespace WellnessCenterBackend.Migrations
                     b.Property<int>("MassageNameId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MassageNameId");
@@ -65,9 +61,6 @@ namespace WellnessCenterBackend.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Performer")
-                        .HasColumnType("int");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -88,7 +81,6 @@ namespace WellnessCenterBackend.Migrations
                         {
                             Id = 1,
                             Description = "Chocolate Massage - Description",
-                            Performer = 2,
                             Price = 199,
                             ServiceName = "Chocolate Massage",
                             ServiceTime = 60
@@ -97,7 +89,6 @@ namespace WellnessCenterBackend.Migrations
                         {
                             Id = 2,
                             Description = "Honey Massage Description",
-                            Performer = 1,
                             Price = 119,
                             ServiceName = "Honey Massage",
                             ServiceTime = 45
@@ -106,7 +97,6 @@ namespace WellnessCenterBackend.Migrations
                         {
                             Id = 3,
                             Description = "Clasic Massage Description",
-                            Performer = 3,
                             Price = 99,
                             ServiceName = "Classic Massage",
                             ServiceTime = 60

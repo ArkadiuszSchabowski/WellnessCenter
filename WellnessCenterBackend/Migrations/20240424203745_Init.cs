@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -8,27 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WellnessCenterBackend.Migrations
 {
     /// <inheritdoc />
-    public partial class TransferingAProjectFromSpaSalon : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Bookings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    isPaid = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bookings", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "MassageNames",
                 columns: table => new
@@ -38,7 +21,6 @@ namespace WellnessCenterBackend.Migrations
                     ServiceName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ServiceTime = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    Performer = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -57,6 +39,28 @@ namespace WellnessCenterBackend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Bookings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookingDay = table.Column<int>(type: "int", nullable: false),
+                    BookingHour = table.Column<int>(type: "int", nullable: false),
+                    MassageNameId = table.Column<int>(type: "int", nullable: false),
+                    IsPaid = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bookings_MassageNames_MassageNameId",
+                        column: x => x.MassageNameId,
+                        principalTable: "MassageNames",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,12 +90,12 @@ namespace WellnessCenterBackend.Migrations
 
             migrationBuilder.InsertData(
                 table: "MassageNames",
-                columns: new[] { "Id", "Description", "Performer", "Price", "ServiceName", "ServiceTime" },
+                columns: new[] { "Id", "Description", "Price", "ServiceName", "ServiceTime" },
                 values: new object[,]
                 {
-                    { 1, "Chocolate Massage - Description", 2, 199, "Chocolate Massage", 60 },
-                    { 2, "Honey Massage Description", 1, 119, "Honey Massage", 45 },
-                    { 3, "Clasic Massage Description", 3, 99, "Classic Massage", 60 }
+                    { 1, "Chocolate Massage - Description", 199, "Chocolate Massage", 60 },
+                    { 2, "Honey Massage Description", 119, "Honey Massage", 45 },
+                    { 3, "Clasic Massage Description", 99, "Classic Massage", 60 }
                 });
 
             migrationBuilder.InsertData(
@@ -103,6 +107,21 @@ namespace WellnessCenterBackend.Migrations
                     { 2, "Manager" },
                     { 3, "Admin" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "HashPassword", "LastName", "Login", "Phone", "RoleId" },
+                values: new object[,]
+                {
+                    { 1, "zajączek@o2.pl", "Dominika", "12345", "Zając", "Dominika123", "500-600-700", 1 },
+                    { 2, "młyniok@o2.pl", "Paulina", "23456", "Młyniok", "Paulina123", "501-601-701", 2 },
+                    { 3, "szum@o2.pl", "Renata", "34567", "Szum", "Renata123", "502-602-702", 3 }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_MassageNameId",
+                table: "Bookings",
+                column: "MassageNameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
@@ -117,10 +136,10 @@ namespace WellnessCenterBackend.Migrations
                 name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "MassageNames");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "MassageNames");
 
             migrationBuilder.DropTable(
                 name: "Roles");

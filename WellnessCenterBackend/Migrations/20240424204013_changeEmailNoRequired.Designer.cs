@@ -11,8 +11,8 @@ using WellnessCenterBackend.Database;
 namespace WellnessCenterBackend.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240324181831_removePerformer")]
-    partial class removePerformer
+    [Migration("20240424204013_changeEmailNoRequired")]
+    partial class changeEmailNoRequired
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,7 +146,6 @@ namespace WellnessCenterBackend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")

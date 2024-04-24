@@ -70,18 +70,25 @@ namespace WellnessCenterBackend.Services
 
         public void RegisterUser(RegisterUserDto dto)
         {
-            dto.RoleId = 1;
             var user = _mapper.Map<User>(dto);
+
+            if(dto.Password != dto.RepeatPassword)
+            {
+                throw new BadRequestException("Wprowadzone hasła są różne");
+            }
 
             var hashedPassword = _passwordHasher.HashPassword(user, user.HashPassword);
             user.HashPassword = hashedPassword;
+
+            user.RoleId = 1;
+
             _context.Users.Add(user);
             _context.SaveChanges();
         }
         public void RegisterAdmin(RegisterUserDto dto)
         {
-            dto.RoleId = 3;
             var user = _mapper.Map<User>(dto);
+            user.RoleId = 3;
 
             var hashedPassword = _passwordHasher.HashPassword(user, user.HashPassword);
             user.HashPassword = hashedPassword;

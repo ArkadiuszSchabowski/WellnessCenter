@@ -38,7 +38,6 @@ namespace WellnessCenterBackend.Seeders
             {
                 Login = "Administrator123",
                 Password = password,
-                Email = "arkadiuszschabowski@gmail.com"
             };
 
             var adminAccount = _mapper.Map<AdminAccountDto>(newAdmin);
