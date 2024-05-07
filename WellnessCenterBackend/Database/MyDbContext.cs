@@ -8,7 +8,6 @@ namespace WellnessCenterBackend.Database
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<MassageName> MassageNames { get; set; }
-        public DbSet<Booking> Bookings { get; set; }
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
 
@@ -93,10 +92,6 @@ namespace WellnessCenterBackend.Database
                 Email = "szum@o2.pl",
                 RoleId = 3,
             });
-            modelBuilder.Entity<Booking>()
-                .HasOne(b => b.MassageName)
-                .WithMany(m => m.MassageBookings)
-                .HasForeignKey(b => b.MassageNameId);
         }
     }
 }

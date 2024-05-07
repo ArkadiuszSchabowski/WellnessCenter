@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using WellnessCenterBackend.Exceptions;
 using WellnessCenterBackend.Models;
 using WellnessCenterBackend.Seeders;
 using WellnessCenterBackend.Services;

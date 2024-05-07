@@ -5,6 +5,7 @@ namespace WellnessCenterBackend.Models
     public class RegisterUserDto
     {
         [Required]
+        [MinLength(5)]
         public string Login { get; set; }
 
         [Required]

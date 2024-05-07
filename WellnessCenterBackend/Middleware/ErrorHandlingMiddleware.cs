@@ -38,7 +38,7 @@ namespace WellnessCenterBackend.Middleware
                 context.Response.StatusCode = 409;
                 await context.Response.WriteAsync(e.Message);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsync("Internal server error");

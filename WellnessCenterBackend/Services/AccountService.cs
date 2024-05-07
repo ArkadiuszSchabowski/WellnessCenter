@@ -44,12 +44,14 @@ namespace WellnessCenterBackend.Services
 
             if (user == null)
             {
-                throw new BadRequestException("Invalid username or password");
+                throw new BadRequestException("Błędny e-mail lub hasło");
             }
+
             var result = _passwordHasher.VerifyHashedPassword(user, user.HashPassword, dto.Password);
+
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new BadRequestException("Invalid username or password");
+                throw new BadRequestException("Błędny e-mail lub hasło");
             }
             var claims = new List<Claim>()
             {
@@ -70,6 +72,12 @@ namespace WellnessCenterBackend.Services
 
         public void RegisterUser(RegisterUserDto dto)
         {
+            var newUser = _context.Users.FirstOrDefault(u => u.Login == dto.Login);
+            if(newUser != null)
+            {
+                throw new ConflictException("Wybrana nazwa użytkownika jest już zajęta");
+            }
+
             var user = _mapper.Map<User>(dto);
 
             if(dto.Password != dto.RepeatPassword)

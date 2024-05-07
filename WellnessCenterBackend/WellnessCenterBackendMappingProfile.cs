@@ -15,7 +15,6 @@ namespace SpaSalon
             CreateMap<RegisterUserDto, AdminAccountDto>();
             CreateMap<UpdateRoleDto, User>();
             CreateMap<User, UserDto>();
-            CreateMap<BookingMassageDto, Booking>();
         }
     }
 }
