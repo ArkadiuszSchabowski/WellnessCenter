@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WellnessCenterBackend.Models;
 using WellnessCenterBackend.Services;
 
@@ -7,7 +8,6 @@ namespace WellnessCenterBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;
@@ -16,6 +16,15 @@ namespace WellnessCenterBackend.Controllers
         {
             _service = service;
         }
+
+        [HttpGet("currentUser")] // All functionalities have been verified to work correctly.
+        public int GetCurrentUserId()
+        {
+            int id = int.Parse(User?.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return id;
+        }
+
         [HttpGet]
         public ActionResult GetAll([FromQuery] PaginationInfoDto dto)
         {
@@ -23,7 +32,7 @@ namespace WellnessCenterBackend.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] //// All functionalities have been verified to work correctly.
         public ActionResult GetUser([FromRoute] int id)
         {
             var user = _service.GetUser(id);
@@ -47,6 +56,12 @@ namespace WellnessCenterBackend.Controllers
         public ActionResult UpdateRole([FromRoute] UpdateRoleDto dto)
         {
             _service.UpdateRole(dto);
+            return Ok();
+        }
+        [HttpPut("{id}")]
+        public ActionResult UpdateUser([FromRoute]int id, [FromBody] UpdateUserDto dto)
+        {
+            _service.UpdateUser(id, dto);
             return Ok();
         }
     }

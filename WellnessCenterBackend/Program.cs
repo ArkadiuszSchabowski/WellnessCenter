@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using WellnessCenterBackend;
 using WellnessCenterBackend.Database;
-using WellnessCenterBackend.Entities;
+using WellnessCenterBackend.Database.Entities;
 using WellnessCenterBackend.Middleware;
 using WellnessCenterBackend.Seeders;
 using WellnessCenterBackend.Services;
@@ -51,6 +51,7 @@ namespace SpaSalon
             builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SpaSalonConnectionString")));
             builder.Services.AddScoped<IMassageService, MassageService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAccountSeeder, AccountSeeder>();
             builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();

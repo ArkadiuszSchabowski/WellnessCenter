@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using WellnessCenterBackend.Database;
-using WellnessCenterBackend.Entities;
+using WellnessCenterBackend.Database.Entities;
 using WellnessCenterBackend.Exceptions;
 using WellnessCenterBackend.Models;
 
@@ -9,10 +9,10 @@ namespace WellnessCenterBackend.Services
     public interface IMassageService
     {
         int CreateMassage(CreateMassageDto dto);
-        public List<MassageName> GetAll();
-        MassageName GetMassage(int id);
+        public List<Massage> GetAll();
+        Massage GetMassage(int id);
         void RemoveMassage(int id);
-        MassageName UpdateMassage(UpdateMassageDto dto, int id);
+        Massage UpdateMassage(UpdateMassageDto dto, int id);
     }
     public class MassageService : IMassageService
     {
@@ -26,18 +26,18 @@ namespace WellnessCenterBackend.Services
         }
 
 
-        public List<MassageName> GetAll()
+        public List<Massage> GetAll()
         {
-            if (!_context.MassageNames.Any())
+            if (!_context.Massages.Any())
             {
                 throw new NotFoundException("Massage not found");
             }
-            return _context.MassageNames.ToList();
+            return _context.Massages.ToList();
         }
 
-        public MassageName GetMassage(int id)
+        public Massage GetMassage(int id)
         {
-            MassageName massage = GetMassageById(id);
+            Massage massage = GetMassageById(id);
 
             return massage;
         }
@@ -48,9 +48,9 @@ namespace WellnessCenterBackend.Services
             {
                 throw new BadRequestException("Bad request");
             }
-            var massage = _mapper.Map<MassageName>(dto);
+            var massage = _mapper.Map<Massage>(dto);
 
-            _context.MassageNames.Add(massage);
+            _context.Massages.Add(massage);
             _context.SaveChanges();
 
             return massage.Id;
@@ -58,24 +58,24 @@ namespace WellnessCenterBackend.Services
 
         public void RemoveMassage(int id)
         {
-            MassageName massage = GetMassageById(id);
+            Massage massage = GetMassageById(id);
 
-            _context.MassageNames.Remove(massage);
+            _context.Massages.Remove(massage);
             _context.SaveChanges();
         }
 
-        public MassageName UpdateMassage(UpdateMassageDto dto, int id)
+        public Massage UpdateMassage(UpdateMassageDto dto, int id)
         {
-            MassageName massage = GetMassageById(id);
+            Massage massage = GetMassageById(id);
 
             _mapper.Map(dto, massage);
 
             _context.SaveChanges();
             return massage;
         }
-        public MassageName GetMassageById(int id)
+        public Massage GetMassageById(int id)
         {
-            var massage = _context.MassageNames.FirstOrDefault(m => m.Id == id);
+            var massage = _context.Massages.FirstOrDefault(m => m.Id == id);
 
             if (massage == null)
             {

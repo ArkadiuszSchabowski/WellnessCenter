@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using WellnessCenterBackend.Entities;
+using WellnessCenterBackend.Database.Entities;
 using WellnessCenterBackend.Models;
 
 namespace SpaSalon
@@ -8,13 +8,15 @@ namespace SpaSalon
     {
         public WellnessCenterBackendMappingProfile()
         {
-            CreateMap<CreateMassageDto, MassageName>();
+            CreateMap<CreateMassageDto, Massage>();
             CreateMap<RegisterUserDto, User>()
               .ForMember(u => u.HashPassword, options => options.MapFrom(dto => dto.Password));
-            CreateMap<UpdateMassageDto, MassageName>();
+            CreateMap<UpdateMassageDto, Massage>();
             CreateMap<RegisterUserDto, AdminAccountDto>();
             CreateMap<UpdateRoleDto, User>();
             CreateMap<User, UserDto>();
+            CreateMap<Booking, BookingDto>();
+            CreateMap<BookingDto, Booking>();
         }
     }
 }

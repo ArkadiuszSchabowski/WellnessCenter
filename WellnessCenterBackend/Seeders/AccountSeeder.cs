@@ -32,26 +32,20 @@ namespace WellnessCenterBackend.Seeders
             {
                 throw new ConflictException("W aplikacji może istnieć tylko jedno konto administratora!");
             }
-            string password = CreateRandomPassword();
 
             var newAdmin = new RegisterUserDto
             {
-                Login = "Administrator123",
-                Password = password,
+                Login = "admin",
+                Password = "admin",
             };
+
+
 
             var adminAccount = _mapper.Map<AdminAccountDto>(newAdmin);
 
             _service.RegisterAdmin(newAdmin);
 
             return adminAccount;
-        }
-        public string CreateRandomPassword()
-        {
-            //WaitingForUpdate
-            Random rnd = new Random();
-            var password = rnd.Next(1000000, 9999999).ToString();
-            return password;
         }
     }
 }

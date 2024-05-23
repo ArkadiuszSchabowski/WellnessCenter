@@ -13,7 +13,7 @@ namespace WellnessCenterBackend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "MassageNames",
+                name: "Massages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -25,7 +25,7 @@ namespace WellnessCenterBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MassageNames", x => x.Id);
+                    table.PrimaryKey("PK_Massages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,28 +42,6 @@ namespace WellnessCenterBackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bookings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BookingDay = table.Column<int>(type: "int", nullable: false),
-                    BookingHour = table.Column<int>(type: "int", nullable: false),
-                    MassageNameId = table.Column<int>(type: "int", nullable: false),
-                    IsPaid = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bookings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bookings_MassageNames_MassageNameId",
-                        column: x => x.MassageNameId,
-                        principalTable: "MassageNames",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -72,7 +50,7 @@ namespace WellnessCenterBackend.Migrations
                     Login = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HashPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoleId = table.Column<int>(type: "int", nullable: false)
@@ -88,8 +66,33 @@ namespace WellnessCenterBackend.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CustomBookings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MassageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Hour = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomBookings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CustomBookings_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
-                table: "MassageNames",
+                table: "Massages",
                 columns: new[] { "Id", "Description", "Price", "ServiceName", "ServiceTime" },
                 values: new object[,]
                 {
@@ -108,20 +111,10 @@ namespace WellnessCenterBackend.Migrations
                     { 3, "Admin" }
                 });
 
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Email", "FirstName", "HashPassword", "LastName", "Login", "Phone", "RoleId" },
-                values: new object[,]
-                {
-                    { 1, "zajączek@o2.pl", "Dominika", "12345", "Zając", "Dominika123", "500-600-700", 1 },
-                    { 2, "młyniok@o2.pl", "Paulina", "23456", "Młyniok", "Paulina123", "501-601-701", 2 },
-                    { 3, "szum@o2.pl", "Renata", "34567", "Szum", "Renata123", "502-602-702", 3 }
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_MassageNameId",
-                table: "Bookings",
-                column: "MassageNameId");
+                name: "IX_CustomBookings_UserId",
+                table: "CustomBookings",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
@@ -133,13 +126,13 @@ namespace WellnessCenterBackend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Bookings");
+                name: "CustomBookings");
+
+            migrationBuilder.DropTable(
+                name: "Massages");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "MassageNames");
 
             migrationBuilder.DropTable(
                 name: "Roles");

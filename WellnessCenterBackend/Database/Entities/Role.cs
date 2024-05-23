@@ -1,4 +1,4 @@
-﻿namespace WellnessCenterBackend.Entities
+﻿namespace WellnessCenterBackend.Database.Entities
 {
     public class Role
     {

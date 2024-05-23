@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WellnessCenterBackend.Database;
-using WellnessCenterBackend.Entities;
+using WellnessCenterBackend.Database.Entities;
 using WellnessCenterBackend.Exceptions;
 using WellnessCenterBackend.Models;
 

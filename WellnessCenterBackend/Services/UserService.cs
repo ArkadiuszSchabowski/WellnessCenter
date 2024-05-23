@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WellnessCenterBackend.Database;
-using WellnessCenterBackend.Entities;
+using WellnessCenterBackend.Database.Entities;
 using WellnessCenterBackend.Exceptions;
 using WellnessCenterBackend.Models;
 
@@ -14,6 +15,7 @@ namespace WellnessCenterBackend.Services
         void UpdateRole(UpdateRoleDto dto);
         List<Role> GetRoles();
         object GetUser(int id);
+        void UpdateUser(int id, UpdateUserDto dto);
     }
     public class UserService : IUserService
     {
@@ -90,6 +92,21 @@ namespace WellnessCenterBackend.Services
                 throw new NotFoundException("Not found");
             }
             return user;
+        }
+
+        public void UpdateUser(int id, UpdateUserDto dto)
+        {
+            var user = _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Id == id);
+            if (user == null)
+            {
+                throw new NotFoundException("Nie znaleziono użytkownika o podanym ID!");
+            }
+            user.FirstName = dto.FirstName;
+            user.LastName = dto.LastName;
+            user.Email = dto.Email;
+            user.Phone = dto.PhoneNumber;
+
+            _context.SaveChanges();
         }
     }
 

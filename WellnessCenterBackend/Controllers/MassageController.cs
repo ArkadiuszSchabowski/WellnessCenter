@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WellnessCenterBackend.Entities;
+using WellnessCenterBackend.Database.Entities;
 using WellnessCenterBackend.Models;
 using WellnessCenterBackend.Services;
 
@@ -17,16 +17,16 @@ namespace WellnessCenterBackend.Controllers
             _service = service;
         }
         [HttpGet]
-        public ActionResult<List<MassageName>> GetAll()
+        public ActionResult<List<Massage>> GetAll()
         {
             var massages = _service.GetAll();
             return Ok(massages);
         }
         [HttpGet("{id}")]
-        public ActionResult<MassageName> GetMassage([FromRoute] int id)
+        public ActionResult<Massage> GetMassage([FromRoute] int id)
         {
-            MassageName massageName = _service.GetMassage(id);
-            return Ok(massageName);
+            Massage massage = _service.GetMassage(id);
+            return Ok(massage);
         }
 
         [HttpPost]

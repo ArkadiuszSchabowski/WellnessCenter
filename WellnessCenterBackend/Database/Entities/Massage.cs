@@ -1,6 +1,6 @@
-﻿namespace WellnessCenterBackend.Entities
+﻿namespace WellnessCenterBackend.Database.Entities
 {
-    public class MassageName
+    public class Massage
     {
         public int Id { get; set; }
         public string ServiceName { get; set; }
